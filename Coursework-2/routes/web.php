@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,15 +18,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/posts/{user?}', function($user = null){
-    return view('user', ['user'=>$user]);
+Route::get('/posts/{comment?}', function($comment = null){
+    return view('comment', ['comment'=>$comment]);
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
+Route::get('/comments', [CommentController::class, 'index'])
+    ->name('comments.index');
+Route::get('/comments/create', [CommentController::class, 'create'])
+    ->name('comments.create');
+Route::post('/comments', [CommentController::class, 'store'])
+    ->name('comments.store');
+Route::get('/comments/{id}', [CommentController::class, 'show'])
+    ->name('comments.show');
 
 require __DIR__.'/auth.php';

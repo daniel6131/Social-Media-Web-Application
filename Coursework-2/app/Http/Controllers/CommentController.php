@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Comment;
 
-class UserController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index', ['users' => $users]);
+        $comments = Comment::all();
+        return view('comments.index', ['comments' => $comments]);
     }
 
     /**
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('comments.create');
     }
 
     /**
@@ -36,7 +36,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'commentBody' => 'required|max:100',
+        ]);
+
+        $c = new Comment;
+        $c->commentBody = $validatedData['commentBody'];
+        $c->save();
+
+        session()->flash('message', 'Comment was created.');
+        return redirect()->route('comments.index');
     }
 
     /**
@@ -47,8 +56,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.show', ['user' => $user]);
+        $comment = Comment::findOrFail($id);
+        return view('comments.show', ['comment' => $comment]);
 
     }
 
