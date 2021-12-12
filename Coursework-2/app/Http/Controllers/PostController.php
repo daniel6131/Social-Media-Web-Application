@@ -24,12 +24,18 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
-        //Validation
+        $validatedData = $request->validate([
+            'postContent' => 'required|max:1000'
+        ]);
+        
         $post = new Post();
-        $post->postTitle = $request['postTitle'];
-        $post->postContent = $request['postContent'];
-        $request->user()->posts()->save($post);
-        return redirect()->route('dashboard');
+        $post->postContent = $validatedData['postContent'];
+        $message = 'There was an error';
+        if ($request->user()->posts()->save($post)) {
+            $message = 'Post was successfully created!';
+        };
+
+        return redirect()->route('dashboard')->with(['message' => $message]);
     }
 
     /**
@@ -40,7 +46,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

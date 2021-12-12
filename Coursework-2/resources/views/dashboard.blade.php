@@ -13,11 +13,11 @@
                             </p>
                         </div>
                         <form action="{{ route('post.create') }}" method="post">
+                            @csrf
                             <div class="form-group">
-                                <span class="text-gray-500 font-medium">Give your post a title</span>
-                                <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" placeholder="What's your topic?" name="postTitle" id="postTitle"></textarea>
-                                <span class="text-gray-500 font-medium">What is your post about?</span>
-                                <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" rows="5" placeholder="Speak your mind" name="postContent" id="postContent"></textarea>
+                                <span class="text-gray-500 font-medium">What do you have to say?</span>
+                                <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" rows="5" 
+                                    placeholder="Speak your mind" name="postContent" id="postContent" value="{{ old('postContent') }}"></textarea>
                                 <button class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">Create Post</button>
                                 <input type="hidden" value="{{ Session::token() }}" name="_token">
                             </div>
