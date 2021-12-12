@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -26,7 +27,7 @@ class PostController extends Controller
         //Validation
         $post = new Post();
         $post->postTitle = $request['postTitle'];
-        $post->postBody = $request['postBody'];
+        $post->postContent = $request['postContent'];
         $request->user()->posts()->save($post);
         return redirect()->route('dashboard');
     }

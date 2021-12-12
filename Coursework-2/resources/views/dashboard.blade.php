@@ -12,33 +12,36 @@
                                 ChitChat
                             </p>
                         </div>
-                        <form action="">
+                        <form action="{{ route('post.create') }}" method="post">
                             <div class="form-group">
                                 <span class="text-gray-500 font-medium">Give your post a title</span>
                                 <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" placeholder="What's your topic?" name="postTitle" id="postTitle"></textarea>
                                 <span class="text-gray-500 font-medium">What is your post about?</span>
-                                <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" rows="5" placeholder="Speak your mind" name="postBody" id="postBody"></textarea>
+                                <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" rows="5" placeholder="Speak your mind" name="postContent" id="postContent"></textarea>
                                 <button class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">Create Post</button>
+                                <input type="hidden" value="{{ Session::token() }}" name="_token">
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="mt-3 flex flex-col">
-                    <div class="bg-white border shadow p-5 text-xl text-gray-700 font-semibold">
-                        A Pretty Cool post.
-                    </div>
-                    <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
-                        <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
-                        <div class="w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Comment</div>
-                        <div class="w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Edit</div>
-                        <div class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</div>
-                    </div>
-                    <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
-                        <div class="w-full">
-                            <div class="w-full text-left text-xl font-medium text-gray-600">
-                                @Some Person
+                    <div class="bg-white mt-3">
+                        <div class="bg-white border shadow p-5 text-xl text-gray-700 font-semibold">
+                            A Pretty Cool post.
+                        </div>
+                        <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
+                            <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
+                            <div class="w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Comment</div>
+                            <div class="w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Edit</div>
+                            <div class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</div>
+                        </div>
+                        <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
+                            <div class="w-full">
+                                <div class="w-full text-left text-xl font-medium text-gray-600">
+                                    @Some Person
+                                </div>
+                                <p class="font-small">That's a pretty cool post.</p>
                             </div>
-                            <p class="font-small">That's a pretty cool post.</p>
                         </div>
                     </div>
                 </div>
