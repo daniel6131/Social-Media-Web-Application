@@ -5,20 +5,24 @@
     <div class="w-full flex flex-row flex-wrap">
         <div class="w-full bg-indigo-100 h-screen flex flex-row flex-wrap justify-center">
             <div class="w-full md:w-3/4 lg:w-4/5 p-5 md:px-12 lg:24 h-full">
-                <form class="bg-white w-full shadow rounded-lg p-5">
+                <div class="bg-white w-full shadow rounded-lg p-5">
                     <div class="text-center space-y-2 sm:text-left">
                         <div class="space-y-0.5">
                             <p class="text-lg text-black font-semibold">
                                 ChitChat
                             </p>
                         </div>
-                        <span class="text-gray-500 font-medium">What do you have to say?</span>
-                        <div class="form-group">
-                            <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" rows="5" placeholder="Speak your mind"></textarea>
-                        </div>
-                        <button class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">Create Post</button>
+                        <form action="">
+                            <div class="form-group">
+                                <span class="text-gray-500 font-medium">Give your post a title</span>
+                                <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" placeholder="What's your topic?" name="postTitle" id="postTitle"></textarea>
+                                <span class="text-gray-500 font-medium">What is your post about?</span>
+                                <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" rows="5" placeholder="Speak your mind" name="postBody" id="postBody"></textarea>
+                                <button class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">Create Post</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
                 <div class="mt-3 flex flex-col">
                     <div class="bg-white border shadow p-5 text-xl text-gray-700 font-semibold">
                         A Pretty Cool post.
