@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -16,7 +17,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->get();
-        return view('dashboard', ['posts' => $posts]);
+        $comments = Comment::orderBy('created_at', 'desc')->get();
+        return view('dashboard', ['posts' => $posts, 'comments' => $comments]);
     }
 
     /**

@@ -40,14 +40,18 @@
                                         <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</a>
                                     @endif
                                 </div>
-                                <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
-                                    <div class="w-full">
-                                        <div class="w-full text-left text-xl font-semibold text-gray-600">
-                                            @Some Person
+                                @foreach($comments as $comment)
+                                    @if($comment->post_id == $post->id)
+                                        <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
+                                            <div class="w-full">
+                                                <div class="w-full text-left text-xl font-semibold text-gray-600">
+                                                    {{ $comment->user->name }}
+                                                </div>
+                                                <p class="font-medium font-size:small">{{ $comment->commentBody }}</p>
+                                            </div>
                                         </div>
-                                        <p class="font-medium font-size:small">That's a pretty cool post.</p>
-                                    </div>
-                                </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     @endforeach
