@@ -6,8 +6,6 @@
 
         <title>Laravel</title>
 
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
-
         <style>
             body {
                 font-family: 'Nunito', sans-serif;

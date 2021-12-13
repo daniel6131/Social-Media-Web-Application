@@ -27,26 +27,26 @@
                 <div class="mt-3 flex flex-col">
                     @foreach($posts as $post)
                         <div class="bg-white mt-3">
-                            <div class="bg-white border shadow p-5 text-xl text-gray-700 font-semibold">
-                                {{ $post->postContent }}
+                            <div class="bg-white border shadow p-5">
+                                <p class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</p>
                                 <div class="text-gray-500 font-medium font-size:small">
                                     Posted by: {{ $post->user->name }}
                                 </div>
-                            </div>
-                            <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
-                                <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
-                                <div class="w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Comment</div>
-                                @if(Auth::user() == $post->user)
-                                    <a href="#" class="modal-open w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Edit</a>
-                                    <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</a>
-                                @endif
-                            </div>
-                            <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
-                                <div class="w-full">
-                                    <div class="w-full text-left text-xl font-medium text-gray-600">
-                                        @Some Person
+                                <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
+                                    <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
+                                    <div class="w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Comment</div>
+                                    @if(Auth::user() == $post->user)
+                                        <a href="#" class="modal-open w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Edit</a>
+                                        <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</a>
+                                    @endif
+                                </div>
+                                <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
+                                    <div class="w-full">
+                                        <div class="w-full text-left text-xl font-semibold text-gray-600">
+                                            @Some Person
+                                        </div>
+                                        <p class="font-medium font-size:small">That's a pretty cool post.</p>
                                     </div>
-                                    <p class="font-small">That's a pretty cool post.</p>
                                 </div>
                             </div>
                         </div>
