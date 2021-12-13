@@ -18,9 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [PostController::class, 'index'])
+    ->middleware(['auth'])->name('dashboard');
 
 Route::post('/createpost', [PostController::class, 'create'])
     ->name('post.create');
