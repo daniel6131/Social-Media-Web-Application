@@ -22,6 +22,9 @@ Route::get('/dashboard', [PostController::class, 'index'])
     ->middleware(['auth'])->name('dashboard');
 
 Route::post('/createpost', [PostController::class, 'create'])
-    ->name('post.create');
+    ->middleware(['auth'])->name('post.create');
+
+Route::get('/destroy-post/{id}', [PostController::class, 'destroy'])
+    ->middleware(['auth'])->name('post.destroy');
 
 require __DIR__.'/auth.php';
