@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
@@ -14,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at', 'desc')->get();
         return view('dashboard', ['posts' => $posts]);
     }
 
@@ -93,6 +94,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::where('id', $id)->first();
+        if (Auth::user() != $post->user) {
+            return redirect()->back();
+        }
         $post->delete();
         return redirect()->route('dashboard')->with(['message' => 'Successfully deleted!']);
     }
