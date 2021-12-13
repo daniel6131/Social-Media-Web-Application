@@ -43,5 +43,6 @@
 
         @yield('content')
 
+        <script src="{{ asset('js/modal.js') }}" defer></script>
     </body>
 </html>

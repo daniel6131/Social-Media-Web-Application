@@ -27,7 +27,7 @@
                 <div class="mt-3 flex flex-col">
                     @foreach($posts as $post)
                         <div class="bg-white mt-3">
-                            <div class="bg-white border shadow p-5">
+                            <div class="bg-white border shadow p-5" data-postid="{{ $post->id }}">
                                 <p class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</p>
                                 <div class="text-gray-500 font-medium font-size:small">
                                     Posted by: {{ $post->user->name }}
@@ -83,12 +83,17 @@
 
                 <!--Footer-->
                 <div class="flex justify-end pt-2">
-                    <button class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Save Changes</button>
-                    <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">Close</button>
+                    <button class="modal-close px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2" data-dismiss="modal">Close</button>
+                    <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" id="modal-save">Save Changes</button>
                 </div>
         
             </div>
         </div>
     </div>
+
+    <script>
+        var token = '{{ Session::token() }}';
+        var url = '{{ route('post.update') }}';
+    </script>
 
 @endsection

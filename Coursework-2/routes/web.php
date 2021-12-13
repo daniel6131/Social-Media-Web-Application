@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\PostController;
 
 /*
@@ -26,5 +27,8 @@ Route::post('/createpost', [PostController::class, 'create'])
 
 Route::get('/destroy-post/{id}', [PostController::class, 'destroy'])
     ->middleware(['auth'])->name('post.destroy');
+
+Route::post('/update' ,[PostController::class, 'update'])
+    ->name('post.update');
 
 require __DIR__.'/auth.php';
