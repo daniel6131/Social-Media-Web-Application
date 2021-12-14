@@ -16,7 +16,14 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body>
+        <style>
+            body {
+            background-color: #E2E8F0;
+            }
+        </style>
+        
         @include('layouts.navigation')
+        @include('components.modal')
 
         @if ($errors->any())   
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

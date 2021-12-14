@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
-    My Profile
-@endsection
-
 @section('content')
-    <style>
-        body {
-        background-color: #E2E8F0;
-        }
-    </style>
     <div class="container mx-auto my-5 p-5">
         <div class="md:flex no-wrap md:-mx-2">
             <div class="w-full md:w-3/12 md:mx-2">
@@ -30,7 +21,7 @@
                 </div>
             </div>
             <div class="w-full md:w-9/12 mx-2">
-                <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
+                <div class="flex flex-col min-w-0 bg-white w-full mb-6 shadow-xl rounded-lg">
                     <div class="flex flex-wrap justify-center py-4">
                         <div class="w-full lg:w-4/12 text-center">
                             <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span class="text-sm text-blueGray-400">Followers</span>
@@ -55,10 +46,9 @@
                                         @if($post->user_id == $user->id)
                                             <div class="bg-white mt-3">
                                                 <div class="bg-white border shadow p-5" data-postid="{{ $post->id }}">
-                                                    <p class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</p>
+                                                    <a href="{{ route('post.show', ['id' => $post->id]) }}" class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</a>
                                                     <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
                                                         <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
-                                                        <div class="w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Comment</div>
                                                         @if(Auth::user() == $post->user)
                                                             <a href="#" class="modal-open w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Edit</a>
                                                             <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</a>
@@ -74,8 +64,8 @@
                                                                     <p class="font-medium font-size:small">{{ $comment->commentBody }}</p>
                                                                 </div>
                                                             </div>
+                                                            @break
                                                         @endif
-                                                        @break
                                                     @endforeach
                                                 </div>
                                             </div>

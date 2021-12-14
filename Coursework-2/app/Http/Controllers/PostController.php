@@ -51,7 +51,15 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::where('id', $id)->first();
+        $comments = Comment::orderBy('created_at', 'desc')->get();
+        if ($post == null) {
+            return redirect()->route('dashboard')->with(['message' => 'Successfully deleted!']);
+        }
+        if (Auth::user() != $post->user || $post == null) {
+            return redirect()->back();
+        }
+        return view('posts.show', ['show' => $id, 'post' => $post, 'comments' => $comments]);
     }
 
     /**
@@ -88,6 +96,6 @@ class PostController extends Controller
             return redirect()->back();
         }
         $post->delete();
-        return redirect()->route('dashboard')->with(['message' => 'Successfully deleted!']);
+        return redirect()->back()->with(['message' => 'Successfully deleted!']);
     }
 }

@@ -35,4 +35,7 @@ Route::get('/destroy-post/{id}', [PostController::class, 'destroy'])
 Route::post('/update' ,[PostController::class, 'update'])
     ->name('post.update');
 
+Route::get('/show-post/{id}', [PostController::class, 'show'])
+    ->middleware(['auth'])->name('post.show');
+
 require __DIR__.'/auth.php';

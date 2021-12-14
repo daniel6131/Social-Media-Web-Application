@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
     {
         $u = new User;
         $u->name = "TestUserName";
-        $u->email = "TestUserEmail";
+        $u->email = "TestUserEmail@email.com";
         $u->password = "TestUserPassword";
         $u->save();
 
