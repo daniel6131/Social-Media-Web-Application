@@ -39,7 +39,7 @@
                             <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($postCount) }}</span><span class="text-sm text-blueGray-400">Posts</span>
                         </div>
                         <div class="w-full lg:w-4/12 text-center">
-                            <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($comments) }}</span><span class="text-sm text-blueGray-400">Comments</span>
+                            <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($commentCount) }}</span><span class="text-sm text-blueGray-400">Comments</span>
                         </div>
                     </div>
                     <div class="text-center">
@@ -75,6 +75,7 @@
                                                                 </div>
                                                             </div>
                                                         @endif
+                                                        @break
                                                     @endforeach
                                                 </div>
                                             </div>

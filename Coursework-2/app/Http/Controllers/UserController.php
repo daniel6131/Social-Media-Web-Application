@@ -50,9 +50,11 @@ class UserController extends Controller
     public function show()
     {
         $postCount = Post::where('user_id', auth()->user()->id)->pluck('id')->toArray();
+        $commentCount = Comment::where('user_id', auth()->user()->id)->pluck('id')->toArray();
         $posts = Post::orderBy('created_at', 'desc')->get();
-        $comments = Comment::whereIn('post_id', $postCount)->latest()->get();
-        return view('profile', ['user' => Auth::user(), 'postCount' => $postCount, 'comments' => $comments, 'posts' => $posts]);
+        $comments = Comment::orderBy('created_at', 'desc')->get();
+        return view('profile', ['user' => Auth::user(), 'postCount' => $postCount, 'commentCount' => $commentCount, 
+                                                        'posts' => $posts, 'comments' => $comments]);
     }
 
     /**

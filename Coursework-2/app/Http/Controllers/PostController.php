@@ -17,8 +17,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->get();
-        $latestComment = Comment::orderBy('created_at', 'desc')->first();
-        return view('dashboard', ['posts' => $posts, 'latestComment' => $latestComment]);
+        $comments = Comment::orderBy('created_at', 'desc')->get();
+        return view('dashboard', ['posts' => $posts, 'comments' => $comments]);
     }
 
     /**
