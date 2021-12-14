@@ -20,8 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/profile', [UserController::class, 'show'])
-    ->name('user.profile');
+Route::get('/show/{id}', [UserController::class, 'show'])
+    ->name('user.show');
 
 Route::get('/dashboard', [PostController::class, 'index'])
     ->middleware(['auth'])->name('dashboard');

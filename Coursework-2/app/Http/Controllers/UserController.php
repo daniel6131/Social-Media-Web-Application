@@ -47,14 +47,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        $postCount = Post::where('user_id', auth()->user()->id)->pluck('id')->toArray();
-        $commentCount = Comment::where('user_id', auth()->user()->id)->pluck('id')->toArray();
+        $user = User::where('id', $id)->first();
+        $postCount = Post::where('user_id', $id)->pluck('id')->toArray();
+        $commentCount = Comment::where('user_id', $id)->pluck('id')->toArray();
         $posts = Post::orderBy('created_at', 'desc')->get();
         $comments = Comment::orderBy('created_at', 'desc')->get();
-        return view('profile', ['user' => Auth::user(), 'postCount' => $postCount, 'commentCount' => $commentCount, 
-                                                        'posts' => $posts, 'comments' => $comments]);
+        return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount,
+                                    'posts' => $posts, 'comments' => $comments, 'user' => $user]);
+        // return view('profile', ['user' => Auth::user(), 'postCount' => $postCount, 'commentCount' => $commentCount, 
+        //                                                 'posts' => $posts, 'comments' => $comments]);
     }
 
     /**

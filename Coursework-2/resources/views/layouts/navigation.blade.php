@@ -16,7 +16,7 @@
             </a>
         </div>
         <div>
-            <a href="{{ route('user.profile') }}" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-200 hover:text-white mr-4">
+            <a href="{{ route('user.show', ['id' => Auth::user()->id]) }}" class="block mt-4 lg:inline-block lg:mt-0 text-indigo-200 hover:text-white mr-4">
                 My Profile
             </a>
         </div>
