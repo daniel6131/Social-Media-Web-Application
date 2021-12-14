@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\PostController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/profile', [UserController::class, 'show'])
+    ->name('user.profile');
 
 Route::get('/dashboard', [PostController::class, 'index'])
     ->middleware(['auth'])->name('dashboard');
