@@ -53,13 +53,28 @@ class PostController extends Controller
     {
         $post = Post::where('id', $id)->first();
         $comments = Comment::orderBy('created_at', 'desc')->get();
+        $user_id = Auth::user()->id;
         if ($post == null) {
             return redirect()->route('dashboard')->with(['message' => 'Successfully deleted!']);
         }
-        if (Auth::user() != $post->user || $post == null) {
-            return redirect()->back();
-        }
-        return view('posts.show', ['show' => $id, 'post' => $post, 'comments' => $comments]);
+        return view('posts.show', ['show' => $id, 'post' => $post, 'comments' => $comments, 'user_id' => $user_id]);
+    }
+
+    public function apiCommentsIndex($id)
+    {
+        // $comments = Comment::all();
+        $comments = Comment::with('user')->where('post_id', $id)->get();
+        return $comments;
+    }
+
+    public function apiCommentsStore(Request $request, $id)
+    {
+        $c = new Comment();
+        $c->commentBody = $request['commentBody'];
+        $c->post_id = $id;
+        $c->user_id = $request['user_id'];
+        $c->save();
+        return $comments = Comment::with('user')->where('post_id', $id)->get();;
     }
 
     /**
