@@ -30,7 +30,7 @@
                             <div class="bg-white border shadow p-5" data-postid="{{ $post->id }}">
                                 <p class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</p>
                                 <div class="text-gray-500 font-medium font-size:small">
-                                    Posted by: {{ $post->user->name }}
+                                    Posted by: {{ $post->user->name }} on {{ $post->created_at->toFormattedDateString() }}
                                 </div>
                                 <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
                                     <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
@@ -40,18 +40,14 @@
                                         <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</a>
                                     @endif
                                 </div>
-                                @foreach($comments as $comment)
-                                    @if($comment->post_id == $post->id)
-                                        <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
-                                            <div class="w-full">
-                                                <div class="w-full text-left text-xl font-semibold text-gray-600">
-                                                    {{ $comment->user->name }}
-                                                </div>
-                                                <p class="font-medium font-size:small">{{ $comment->commentBody }}</p>
-                                            </div>
+                                <div class="bg-white border-4 bg-gray-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
+                                    <div class="w-full">
+                                        <div class="w-full text-left text-xl font-semibold text-gray-600">
+                                            {{ $latestComment->user->name }}
                                         </div>
-                                    @endif
-                                @endforeach
+                                        <p class="font-medium font-size:small">{{ $latestComment->commentBody }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach
