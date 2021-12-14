@@ -62,19 +62,23 @@ class PostController extends Controller
 
     public function apiCommentsIndex($id)
     {
-        // $comments = Comment::all();
         $comments = Comment::with('user')->where('post_id', $id)->get();
         return $comments;
     }
 
     public function apiCommentsStore(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            "commentBody" => "required|max:200",
+            "user_id" => "required|integer",
+        ]);
+
         $c = new Comment();
-        $c->commentBody = $request['commentBody'];
+        $c->commentBody = $validatedData['commentBody'];
         $c->post_id = $id;
-        $c->user_id = $request['user_id'];
+        $c->user_id = $validatedData['user_id'];
         $c->save();
-        return $comments = Comment::with('user')->where('post_id', $id)->get();;
+        return $comments = Comment::with('user')->where('post_id', $id)->get();
     }
 
     /**
