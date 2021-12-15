@@ -4,11 +4,25 @@
     <div class="container mx-auto my-5 p-5">
         <div class="md:flex no-wrap md:-mx-2">
             <div class="w-full md:w-3/12 md:mx-2">
-                <div class="bg-white p-3 border-t-4 border-green-400">
+                <div class="bg-white p-3 border-t-4 border-indigo-400">
                     <div class="image overflow-hidden">
                         <img class="h-auto w-full mx-auto" src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg" alt="">
                     </div>
-                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">About Me:</h1>
+                    <div class="my-3 text-center">
+                        {{-- @foreach ($followers as $follower) --}}
+                            @if ($exists)
+                                <a href="{{ route('user.unfollow', ['id' => $user->id]) }}" class="flex-shrink-0 bg-indigo-500 hover:bg-indigo-700 border-indigo-500 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded">
+                                    Unfollow
+                                </a>
+                            @elseif ($user == Auth::user())
+                            @else
+                                <a href="{{ route('user.follow', ['id' => $user->id]) }}" class="flex-shrink-0 bg-indigo-500 hover:bg-indigo-700 border-indigo-500 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded">
+                                    Follow
+                                </a>
+                            @endif
+                        {{-- @endforeach --}}
+                    </div>
+                    <h1 class="text-gray-900 font-bold text-xl leading-8">About Me:</h1>
                     <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
                         consectetur adipisicing elit.
                         Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
@@ -38,7 +52,7 @@
                             {{ $user->name }}
                         </h3>
                     </div>
-                    <div class="mt-6 py-4 border-t border-blueGray-200 text-center">
+                    <div class="mt-6 py-4 border-t border-blueGray-200">
                         <div class="flex flex-wrap justify-center">
                             <div class="w-full lg:w-11/12">
                                 <div class="mt-3 flex flex-col">

@@ -38,4 +38,10 @@ Route::post('/update' ,[PostController::class, 'update'])
 Route::get('/show-post/{id}', [PostController::class, 'show'])
     ->middleware(['auth'])->name('post.show');
 
+Route::get('/followuser/{id}', [UserController::class, 'follow'])
+    ->middleware(['auth'])->name('user.follow');
+
+Route::get('/unfollowuser/{id}', [UserController::class, 'unfollow'])
+    ->middleware(['auth'])->name('user.unfollow');
+
 require __DIR__.'/auth.php';

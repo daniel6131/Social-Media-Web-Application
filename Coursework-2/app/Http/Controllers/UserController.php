@@ -54,11 +54,28 @@ class UserController extends Controller
         $commentCount = Comment::where('user_id', $id)->pluck('id')->toArray();
         $posts = Post::orderBy('created_at', 'desc')->get();
         $comments = Comment::orderBy('created_at', 'desc')->get();
-        $followersCount = $user->followings()->get()->toArray();
+        $followersCount = $user->followers()->get()->toArray();
+        $exists = $user->followers()->where('follower_id', Auth::user()->id)->exists();
         return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount, 'followersCount' => $followersCount,
-                                    'posts' => $posts, 'comments' => $comments, 'user' => $user]);
-        // return view('profile', ['user' => Auth::user(), 'postCount' => $postCount, 'commentCount' => $commentCount, 
-        //                                                 'posts' => $posts, 'comments' => $comments]);
+                                    'posts' => $posts, 'comments' => $comments, 'user' => $user, 'exists' => $exists]);
+    }
+
+    public function follow($id) 
+    {     
+        $userToFollow = User::where('id', $id)->first();
+        $viewingUser = User::find(Auth::user()->id);
+        $viewingUser->followings()->attach($userToFollow->id);
+        
+        return redirect()->route('user.show', ['id' => $id]);
+    }
+
+    public function unfollow($id)
+    {
+        $userToUnFollow = User::where('id', $id)->first();
+        $viewingUser = User::find(Auth::user()->id);
+        $viewingUser->followings()->detach($userToUnFollow->id);
+        
+        return redirect()->route('user.show', ['id' => $id]);
     }
 
     /**
