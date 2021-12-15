@@ -24,7 +24,7 @@
                 <div class="flex flex-col min-w-0 bg-white w-full mb-6 shadow-xl rounded-lg">
                     <div class="flex flex-wrap justify-center py-4">
                         <div class="w-full lg:w-4/12 text-center">
-                            <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span class="text-sm text-blueGray-400">Followers</span>
+                            <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($followersCount) }}</span><span class="text-sm text-blueGray-400">Followers</span>
                         </div>
                         <div class="w-full lg:w-4/12 text-center">
                             <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($postCount) }}</span><span class="text-sm text-blueGray-400">Posts</span>

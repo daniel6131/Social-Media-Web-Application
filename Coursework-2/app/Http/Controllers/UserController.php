@@ -54,7 +54,8 @@ class UserController extends Controller
         $commentCount = Comment::where('user_id', $id)->pluck('id')->toArray();
         $posts = Post::orderBy('created_at', 'desc')->get();
         $comments = Comment::orderBy('created_at', 'desc')->get();
-        return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount,
+        $followersCount = $user->followings()->get()->toArray();
+        return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount, 'followersCount' => $followersCount,
                                     'posts' => $posts, 'comments' => $comments, 'user' => $user]);
         // return view('profile', ['user' => Auth::user(), 'postCount' => $postCount, 'commentCount' => $commentCount, 
         //                                                 'posts' => $posts, 'comments' => $comments]);
