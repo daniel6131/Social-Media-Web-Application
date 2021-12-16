@@ -9,8 +9,14 @@ class Post extends Model
 {
     use HasFactory;
 
-    public function user()
+    public function postable()
     {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

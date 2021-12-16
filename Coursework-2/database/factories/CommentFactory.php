@@ -17,7 +17,8 @@ class CommentFactory extends Factory
     {
         return [
             'commentBody' => $this->faker->realText(100),
-            'user_id' => User::all()->random()->id,
+            'commentable_id' => User::all()->random()->id,
+            'commentable_type' => 'App\Models\UserProfile',
             'post_id' => Post::all()->random()->id,
         ];
     }

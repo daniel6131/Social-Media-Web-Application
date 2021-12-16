@@ -16,7 +16,8 @@ class PostFactory extends Factory
     {
         return [
             'postContent' => $this->faker->paragraph(2),
-            'user_id' => User::all()->random()->id,
+            'postable_id' => User::all()->random()->id,
+            'postable_type' => 'App\Models\UserProfile',
         ];
     }
 }

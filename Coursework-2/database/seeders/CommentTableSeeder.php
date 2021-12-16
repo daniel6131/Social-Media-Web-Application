@@ -15,7 +15,8 @@ class CommentTableSeeder extends Seeder
     {
         $c = new Comment;
         $c->commentBody = "TestCommentBody";
-        $c->user_id = 1;
+        $c->commentable_id = 1;
+        $c->commentable_type = 'App\Models\UserProfile';
         $c->post_id = 1;
         $c->save();
 
