@@ -14,7 +14,7 @@
                     <div class="bg-white border shadow p-5" data-postid="{{ $post->id }}">
                         <p class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</p>
                         <div class="text-gray-500 font-medium font-size:small">
-                            Posted by: {{ $post->user->name }}
+                            Posted by: {{ $post->postable->user->name }}
                         </div>
                         <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
                             <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
@@ -29,7 +29,7 @@
                                 <li v-for="comment in comments" class="bg-white border-4 bg-indigo-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
                                     <div class="w-full">
                                         <div class="w-full text-left text-xl font-semibold text-gray-600">
-                                            @{{ comment.user.name }}
+                                            @{{ comment.commentable.username }}
                                         </div>
                                         <p class="font-medium font-size:small">@{{ comment.commentBody }}</p>
                                     </div>
@@ -60,7 +60,8 @@
             data: {
                 comments: [],
                 newCommentBody: '',
-                user_id: {{ $user_id }},
+                user_id: {{ $userId }},
+                user_type: '{{ $userType }}',
             },
             methods: {
                 createComment: function() {
@@ -68,6 +69,7 @@
                     {
                         commentBody: this.newCommentBody,
                         user_id: this.user_id,
+                        user_type: this.user_type,
                     })
                     .then(response => {
                         this.comments = response.data;

@@ -40,20 +40,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $vlaidatedData = $request->validate([
+        $validatedData = $request->validate([
             "type" => "required|max:5",
-            "bio" => "max:100"
+            "username" => "required|unique:user_profiles|unique:admin_profiles|max:15",
+            // "bio" => "max:100"
         ]);
 
-        if ($vlaidatedData["type"] == "user")
+        if ($validatedData["type"] == "user")
         {
             $u = new UserProfile;
-            $u->bio = $vlaidatedData["bio"];
+            // $u->bio = $validatedData["bio"];
         }
         else{
             $u = new AdminProfile;
         }
 
+        $u->username = $validatedData["username"];
         $u->user_id = auth()->user()->id;
         $u->save();
 
@@ -70,10 +72,10 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
 
-        $postCount = Post::where('user_id', $id)->pluck('id')->toArray();
+        $postCount = Post::where('postable_id', $id)->pluck('id')->toArray();
         $posts = Post::orderBy('created_at', 'desc')->get();
 
-        $commentCount = Comment::where('user_id', $id)->pluck('id')->toArray();
+        $commentCount = Comment::where('commentable_id', $id)->pluck('id')->toArray();
         $comments = Comment::orderBy('created_at', 'desc')->get();
         
         $followersCount = $user->followers()->get()->toArray();

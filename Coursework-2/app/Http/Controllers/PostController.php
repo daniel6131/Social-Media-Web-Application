@@ -16,9 +16,27 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
-        $comments = Comment::orderBy('created_at', 'desc')->get();
-        return view('dashboard', ['posts' => $posts, 'comments' => $comments]);
+        $user = auth()->user();
+        $posts = Post::latest()->get();
+        $comments = Comment::latest()->get();
+        if($user !== null)
+        {
+            if($user->UserProfile !== null)
+            {
+                $userType = "UserProfile";
+                $userId = $user->userProfile->id;
+            }
+            else
+            {
+                $userType = "AdminProfile";
+                $userId = $user->adminProfile->id;
+            }
+            return view('dashboard', ['posts' => $posts, 'comments' => $comments, 'userType' => $userType, 'userId' => $userId]);
+        }
+        else
+        {
+            return view('welcome');
+        }
     }
 
     /**
@@ -29,18 +47,31 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
+        $user = auth()->user();
+
         $validatedData = $request->validate([
             'postContent' => 'required|max:1000'
         ]);
         
-        $post = new Post();
-        $post->postContent = $validatedData['postContent'];
-        $message = 'There was an error';
-        if ($request->user()->posts()->save($post)) {
-            $message = 'Post was successfully created!';
-        };
+        $p = new Post();
+        $p->postContent = $validatedData['postContent'];
+        if ($user->userProfile !== null)
+        {
+            $p->postable_id = $user->userProfile->id;
+            $p->postable_type = "App\Models\UserProfile";
+        }
+        else
+        {
+            $p->postable_id = $user->adminProfile->id;
+            $p->postable_type = "App\Models\AdminProfile";
+        }
+        // $message = 'There was an error';
+        // if ($request->user()->posts()->save($p)) {
+        //     $message = 'Post was successfully created!';
+        // };
+        $p->save();
 
-        return redirect()->route('dashboard')->with(['message' => $message]);
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -52,17 +83,34 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::where('id', $id)->first();
-        $comments = Comment::orderBy('created_at', 'desc')->get();
-        $user_id = Auth::user()->id;
+        $comments = Comment::latest()->get();
         if ($post == null) {
             return redirect()->route('dashboard')->with(['message' => 'Successfully deleted!']);
         }
-        return view('posts.show', ['show' => $id, 'post' => $post, 'comments' => $comments, 'user_id' => $user_id]);
+        $user = auth()->user();
+        if($user !== null)
+        {
+            if($user->UserProfile !== null)
+            {
+                $userType = "UserProfile";
+                $userId = $user->userProfile->id;
+            }
+            else
+            {
+                $userType = "AdminProfile";
+                $userId = $user->adminProfile->id;
+            }
+            return view('posts.show', ['show' => $id, 'post' => $post, 'comments' => $comments, 'userType' => $userType, 'userId' => $userId]);
+        }
+        else
+        {
+            return view('welcome');
+        }
     }
 
     public function apiCommentsIndex($id)
     {
-        $comments = Comment::with('user')->where('post_id', $id)->get();
+        $comments = Comment::with('commentable')->where('post_id', $id)->get();
         return $comments;
     }
 
@@ -71,14 +119,26 @@ class PostController extends Controller
         $validatedData = $request->validate([
             "commentBody" => "required|max:200",
             "user_id" => "required|integer",
+            "user_type" => "required|max:12"
         ]);
 
         $c = new Comment();
         $c->commentBody = $validatedData['commentBody'];
+
+        if ($validatedData["user_type"] == "UserProfile")
+        {
+            $c->commentable_type = "App\Models\UserProfile";
+        }
+        else
+        {
+            $c->commentable_type = "App\Models\AdminProfile";
+        }
+
         $c->post_id = $id;
-        $c->user_id = $validatedData['user_id'];
+        $c->commentable_id = $validatedData['user_id'];
         $c->save();
-        return $comments = Comment::with('user')->where('post_id', $id)->get();
+
+        return $comments = Comment::with('commentable')->where('post_id', $id)->get();
     }
 
     /**
@@ -94,12 +154,15 @@ class PostController extends Controller
             'postContent' => 'required'
         ]);
         $post = Post::find($request['Id']);
-        if (Auth::user() != $post->user) {
-            return redirect()->back();
+        $user = auth()->user();
+        if ($user == $post->postable->user or $user->AdminProfile !== null) {
+            $post->postContent = $request['postContent'];
+            $post->update();
+            return response()->json(['new_body' => $post->postContent], 200);
         }
-        $post->postContent = $request['postContent'];
-        $post->update();
-        return response()->json(['new_body' => $post->postContent], 200);
+        else {
+            return redirect()->back()->with(['message' => 'Successfully deleted!']);
+        }
     }
 
     /**
@@ -111,10 +174,12 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::where('id', $id)->first();
-        if (Auth::user() != $post->user) {
+        $user = auth()->user();
+        if ($user == $post->postable->user or $user->AdminProfile !== null) {
+            $post->delete();
+            return redirect()->back()->with(['message' => 'Successfully deleted!']);
+        } else {
             return redirect()->back();
         }
-        $post->delete();
-        return redirect()->back()->with(['message' => 'Successfully deleted!']);
     }
 }
