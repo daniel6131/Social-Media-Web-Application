@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\AdminProfile;
+use App\Models\UserProfile;
 use App\Models\Post;
 use App\Models\Comment;
 
@@ -27,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -38,7 +40,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vlaidatedData = $request->validate([
+            "type" => "required|max:5",
+            "bio" => "max:100"
+        ]);
+
+        if ($vlaidatedData["type"] == "user")
+        {
+            $u = new UserProfile;
+            $u->bio = $vlaidatedData["bio"];
+        }
+        else{
+            $u = new AdminProfile;
+        }
+
+        $u->user_id = auth()->user()->id;
+        $u->save();
+
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -50,10 +69,13 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::where('id', $id)->first();
+
         $postCount = Post::where('user_id', $id)->pluck('id')->toArray();
-        $commentCount = Comment::where('user_id', $id)->pluck('id')->toArray();
         $posts = Post::orderBy('created_at', 'desc')->get();
+
+        $commentCount = Comment::where('user_id', $id)->pluck('id')->toArray();
         $comments = Comment::orderBy('created_at', 'desc')->get();
+        
         $followersCount = $user->followers()->get()->toArray();
         $exists = $user->followers()->where('follower_id', Auth::user()->id)->exists();
         return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount, 'followersCount' => $followersCount,

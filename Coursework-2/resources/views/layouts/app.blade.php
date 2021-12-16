@@ -9,6 +9,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/chitchat.css') }}">
 
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,14 +17,14 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body>
-        <style>
-            body {
-            background-color: #E2E8F0;
-            }
-        </style>
         
-        @include('layouts.navigation')
-        @include('components.modal')
+        @section('layouts.navigation')
+            @include('layouts.navigation')
+        @show
+
+        @section('components.modal')
+            @include('components.modal')
+        @show
 
         @if ($errors->any())   
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

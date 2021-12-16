@@ -44,4 +44,10 @@ Route::get('/followuser/{id}', [UserController::class, 'follow'])
 Route::get('/unfollowuser/{id}', [UserController::class, 'unfollow'])
     ->middleware(['auth'])->name('user.unfollow');
 
+Route::get('/user/create', [UserController::class, 'create'])
+    ->middleware(['auth'])->name('user.create');
+
+Route::post('/dashboard', [UserController::class, 'store'])
+    ->middleware(['auth'])->name('user.store');
+
 require __DIR__.'/auth.php';

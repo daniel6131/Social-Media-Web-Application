@@ -42,23 +42,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function posts()
+    public function userProfile()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasOne(UserProfile::class);
     }
 
-    public function comments()
+    public function adminProfile()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasOne(AdminProfile::class);
     }
 
     public function followings()
     {
-        return $this->belongsToMany(User::class, 'follower_user', 'follower_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_profile_user_profile', 'follower_id', 'user_id');
     }
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'user_profile_user_profile', 'user_id', 'follower_id');
     }
+
 }

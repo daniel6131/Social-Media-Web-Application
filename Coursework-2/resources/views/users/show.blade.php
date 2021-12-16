@@ -9,7 +9,6 @@
                         <img class="h-auto w-full mx-auto" src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg" alt="">
                     </div>
                     <div class="my-3 text-center">
-                        {{-- @foreach ($followers as $follower) --}}
                             @if ($exists)
                                 <a href="{{ route('user.unfollow', ['id' => $user->id]) }}" class="flex-shrink-0 bg-indigo-500 hover:bg-indigo-700 border-indigo-500 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded">
                                     Unfollow
@@ -20,7 +19,6 @@
                                     Follow
                                 </a>
                             @endif
-                        {{-- @endforeach --}}
                     </div>
                     <h1 class="text-gray-900 font-bold text-xl leading-8">About Me:</h1>
                     <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
