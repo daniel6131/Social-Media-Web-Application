@@ -32,8 +32,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    var token = '{{ Session::token() }}';
-    var url = '{{ route('post.update') }}';
-</script>

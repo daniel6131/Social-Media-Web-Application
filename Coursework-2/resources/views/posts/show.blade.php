@@ -26,13 +26,15 @@
                         </div>
                         <div id="comment">
                             <ul>
-                                <li v-for="comment in comments" class="bg-white border-4 bg-indigo-300 border-white rounded-b-lg shadow p-5 text-gray-700 content-center flex flex-row flex-wrap">
-                                    <div class="w-full">
-                                        <div class="w-full text-left text-xl font-semibold text-gray-600">
-                                            @{{ comment.commentable.username }}
+                                <li v-for="comment in comments" class="bg-white border-4 bg-indigo-500 border-white rounded-b-lg shadow p-5 text-white">
+                                    <div class="flex justify-between mb-1">
+                                        <div class="w-full text-left text-xl font-semibold text-white">
+                                            @{{ comment.commentBody }}
                                         </div>
-                                        <p class="font-medium font-size:small">@{{ comment.commentBody }}</p>
+                                        <button class="ml-2 mt-1 mb-auto text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-indigo-500 hover:bg-white mt-4 lg:mt-0">Edit</button>
+                                        <button class="ml-2 mt-1 mb-auto text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-indigo-500 hover:bg-white mt-4 lg:mt-0">Delete</button>
                                     </div>
+                                    <p class="font-medium font-size:small">@{{ comment.commentable.username }}</p>
                                 </li>
                             </ul>
                             <form class="w-full">
@@ -53,6 +55,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var token = '{{ Session::token() }}';
+        var url = '{{ route('post.update') }}';
+    </script>
 
     <script>
         var app = new Vue({

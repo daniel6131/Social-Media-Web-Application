@@ -80,8 +80,27 @@ class UserController extends Controller
         
         $followersCount = $user->followers()->get()->toArray();
         $exists = $user->followers()->where('follower_id', Auth::user()->id)->exists();
-        return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount, 'followersCount' => $followersCount,
-                                    'posts' => $posts, 'comments' => $comments, 'user' => $user, 'exists' => $exists]);
+
+        $thisUser = auth()->user();
+        if($thisUser !== null)
+        {
+            if($thisUser->UserProfile !== null)
+            {
+                $userType = "UserProfile";
+                $userId = $thisUser->userProfile->id;
+            }
+            else
+            {
+                $userType = "AdminProfile";
+                $userId = $thisUser->adminProfile->id;
+            }
+            return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount, 'followersCount' => $followersCount,
+                                    'posts' => $posts, 'comments' => $comments, 'user' => $user, 'exists' => $exists, 'userType' => $userType, 'userId' => $userId]);
+        }
+        else
+        {
+            return view('welcome');
+        }
     }
 
     public function follow($id) 
