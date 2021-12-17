@@ -12,12 +12,18 @@
                                 ChitChat
                             </p>
                         </div>
-                        <form action="{{ route('post.create') }}" method="post">
+                        <form action="{{ route('post.create') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <span class="text-gray-500 font-medium">What do you have to say?</span>
                                 <textarea class="bg-gray-200 w-full rounded-lg shadow border p-2" rows="5" 
-                                    placeholder="Speak your mind" name="postContent" id="postContent" value="{{ old('postContent') }}"></textarea>
+                                    placeholder="Speak your mind" name="postContent" id="postContent" class="form-control" value="{{ old('postContent') }}"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="media" class="text-gray-500 font-medium">Maybe upload an image accompany:</label>
+                                <input type="file" name="media" class="form-control" id="media">
+                            </div>
+                            <div class="form-group">
                                 <button class="px-4 py-1 text-sm text-indigo-600 font-semibold rounded-full border border-indigo-200 hover:text-white hover:bg-indigo-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">Create Post</button>
                                 <input type="hidden" value="{{ Session::token() }}" name="_token">
                             </div>
@@ -27,6 +33,9 @@
                 <div class="mt-3 flex flex-col">
                     @foreach($posts as $post)
                         <div class="bg-white mt-3">
+                            @if (Storage::disk('local')->has($post->mediaPath))
+                                <img class="border rounded-t-lg shadow-lg center" src="{{ route('post.media', ['mediaPath' => $post->mediaPath]) }}">
+                            @endif
                             <div class="bg-white border shadow p-5" data-postid="{{ $post->id }}">
                                 <a href="{{ route('post.show', ['id' => $post->id]) }}" class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</a>
                                 <div class="text-gray-500 font-medium font-size:small">
@@ -37,7 +46,7 @@
                                 <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
                                     <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
                                     @auth
-                                        @if($userId == $post->postable->user->id or $userType == "AdminProfile")
+                                        @if($user->id == $post->postable->user->id or $userType == "AdminProfile")
                                             <a href="#" class="modal-open w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Edit</a>
                                             <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</a>
                                         @endif

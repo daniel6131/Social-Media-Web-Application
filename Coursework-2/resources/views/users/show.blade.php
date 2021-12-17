@@ -6,7 +6,7 @@
             <div class="w-full md:w-3/12 md:mx-2">
                 <div class="bg-white p-3 border-t-4 border-indigo-400">
                     <div class="image overflow-hidden">
-                        <img class="h-auto w-full mx-auto" src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg" alt="">
+                        <img class="h-auto w-full mx-auto" src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" alt="">
                     </div>
                     <div class="my-3 text-center">
                             @if ($exists)
@@ -73,7 +73,7 @@
                                                     <div class="bg-white p-1 border shadow flex flex-row flex-wrap">
                                                         <div class="w-1/4 hover:bg-gray-200 text-center text-s text-gray-700 font-semibold">Like</div>
                                                         @auth
-                                                            @if($userId == $post->postable->user->id or $userType == "AdminProfile")
+                                                            @if($thisUser->id == $post->postable->user->id or $userType == "AdminProfile")
                                                                 <a href="#" class="modal-open w-1/4 hover:bg-gray-200 border-l-4 border-r- text-center text-s text-gray-700 font-semibold">Edit</a>
                                                                 <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="w-1/4 hover:bg-gray-200 border-l-4 text-center text-s text-gray-700 font-semibold">Delete</a>
                                                             @endif

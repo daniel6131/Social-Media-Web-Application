@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 use App\Models\Post;
 use App\Models\Comment;
 
@@ -24,14 +28,12 @@ class PostController extends Controller
             if($user->UserProfile !== null)
             {
                 $userType = "UserProfile";
-                $userId = $user->userProfile->id;
             }
             else
             {
                 $userType = "AdminProfile";
-                $userId = $user->adminProfile->id;
             }
-            return view('dashboard', ['posts' => $posts, 'comments' => $comments, 'userType' => $userType, 'userId' => $userId]);
+            return view('dashboard', ['posts' => $posts, 'comments' => $comments, 'userType' => $userType, 'user' => $user]);
         }
         else
         {
@@ -55,6 +57,8 @@ class PostController extends Controller
         
         $p = new Post();
         $p->postContent = $validatedData['postContent'];
+        $media = $request->file('media');
+        
         if ($user->userProfile !== null)
         {
             $p->postable_id = $user->userProfile->id;
@@ -65,13 +69,29 @@ class PostController extends Controller
             $p->postable_id = $user->adminProfile->id;
             $p->postable_type = "App\Models\AdminProfile";
         }
-        // $message = 'There was an error';
-        // if ($request->user()->posts()->save($p)) {
-        //     $message = 'Post was successfully created!';
-        // };
+
+        if ($media)
+        {
+            $mediaPath = $request->media->hashName();
+            $request->validate([
+                'media' => 'mimes:jpeg,png',
+            ]);
+
+            Storage::disk('local')->put($mediaPath, File::get($media));
+
+            // $request->file->store('user_files', 'public');
+            $p->mediaPath = $mediaPath;
+        }
+
         $p->save();
 
         return redirect()->route('dashboard');
+    }
+
+    public function getPostMedia($mediaPath)
+    {
+        $media = Storage::disk('local')->get($mediaPath);
+        return new Response($media, 200);
     }
 
     /**

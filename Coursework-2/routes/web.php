@@ -32,7 +32,7 @@ Route::post('/createpost', [PostController::class, 'create'])
 Route::get('/destroy-post/{id}', [PostController::class, 'destroy'])
     ->middleware(['auth'])->name('post.destroy');
 
-Route::post('/update' ,[PostController::class, 'update'])
+Route::post('/postupdate' ,[PostController::class, 'update'])
     ->name('post.update');
 
 Route::get('/show-post/{id}', [PostController::class, 'show'])
@@ -49,5 +49,14 @@ Route::get('/user/create', [UserController::class, 'create'])
 
 Route::post('/dashboard', [UserController::class, 'store'])
     ->middleware(['auth'])->name('user.store');
+
+Route::get('/postmedia/{mediaPath}', [PostController::class, 'getPostMedia'])
+    ->name('post.media');
+
+Route::post('/commentupdate', [PostController::class, 'updateComment'])
+    ->name('comments.update');
+
+Route::post('/commentdestory', [PostController::class, 'destroyComment'])
+    ->name('comments.destroy');
 
 require __DIR__.'/auth.php';

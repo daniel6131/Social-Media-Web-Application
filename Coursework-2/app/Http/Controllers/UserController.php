@@ -95,7 +95,7 @@ class UserController extends Controller
                 $userId = $thisUser->adminProfile->id;
             }
             return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount, 'followersCount' => $followersCount,
-                                    'posts' => $posts, 'comments' => $comments, 'user' => $user, 'exists' => $exists, 'userType' => $userType, 'userId' => $userId]);
+                                    'posts' => $posts, 'comments' => $comments, 'user' => $user, 'exists' => $exists, 'userType' => $userType, 'thisUser' => $thisUser]);
         }
         else
         {
