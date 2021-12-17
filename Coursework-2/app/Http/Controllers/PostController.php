@@ -169,24 +169,27 @@ class PostController extends Controller
         ]);
         $comment = Comment::find($request['commentId']);
         $user = auth()->user();
-        $comment->commentBody = $request['commentBody'];
-        $comment->update();
         return redirect()->route('post.show', ['id' => $id]);
-        // if ($user == $post->postable->user or $user->AdminProfile !== null) {
-        //     $comment->commentBody = $request['commentBody'];
-        //     $post->update();
-        //     return response()->json(['new_body' => $post->postContent], 200);
-        // }
-        // else {
-        //     return redirect()->back()->with(['message' => 'Successfully deleted!']);
-        // }
+        if ($user == $comment->commentable->user or $user->AdminProfile !== null) {
+            $comment->commentBody = $request['commentBody'];
+            $comment->update();
+            return redirect()->route('post.show', ['id' => $id]);
+        }
+        else {
+            return redirect()->back();
+        }
     }
 
     public function destroyComment(Request $request, $id)
     {
         $comment = Comment::find($request['commentId']);
-        $comment->delete();
-        return redirect()->route('post.show', ['id' => $id]);
+        $user = auth()->user();
+        if ($user == $comment->commentable->user or $user->AdminProfile !== null) {
+            $comment->delete();
+            return redirect()->route('post.show', ['id' => $id]);
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -209,7 +212,7 @@ class PostController extends Controller
             return response()->json(['new_body' => $post->postContent], 200);
         }
         else {
-            return redirect()->back()->with(['message' => 'Successfully deleted!']);
+            return redirect()->back();
         }
     }
 
