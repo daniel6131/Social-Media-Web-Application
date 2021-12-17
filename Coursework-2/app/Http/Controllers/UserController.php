@@ -62,10 +62,10 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
 
-        $postCount = Post::where('postable_id', $id)->pluck('id')->toArray();
-        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
+        $postCount = Post::where('postable_id', $user->id)->pluck('id')->toArray();
+        $posts = Post::orderBy('created_at', 'desc')->get();
 
-        $commentCount = Comment::where('commentable_id', $id)->pluck('id')->toArray();
+        $commentCount = Comment::where('commentable_id', $user->id)->pluck('id')->toArray();
         $comments = Comment::orderBy('created_at', 'desc')->get();
         
         $followersCount = $user->followers()->get()->toArray();
@@ -74,15 +74,15 @@ class UserController extends Controller
         $thisUser = auth()->user();
         if($thisUser !== null)
         {
-            if($thisUser->UserProfile !== null)
+            if($user->UserProfile !== null)
             {
-                $userType = "UserProfile";
-                $userId = $thisUser->userProfile->id;
+                $userType = 'UserProfile';
+                $userId = $user->userProfile->id;
             }
             else
             {
-                $userType = "AdminProfile";
-                $userId = $thisUser->adminProfile->id;
+                $userType = 'AdminProfile';
+                $userId = $user->adminProfile->id;
             }
             return view('users.show', ['show' => $id, 'postCount' => $postCount, 'commentCount' => $commentCount, 'followersCount' => $followersCount,
                                     'posts' => $posts, 'comments' => $comments, 'user' => $user, 'exists' => $exists, 'userType' => $userType, 'thisUser' => $thisUser]);

@@ -129,7 +129,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{ $posts->links() }}
                     </div>
                 </div>
             </div>
