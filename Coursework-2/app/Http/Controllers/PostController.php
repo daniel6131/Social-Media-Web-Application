@@ -169,7 +169,6 @@ class PostController extends Controller
         ]);
         $comment = Comment::find($request['commentId']);
         $user = auth()->user();
-        return redirect()->route('post.show', ['id' => $id]);
         if ($user == $comment->commentable->user or $user->AdminProfile !== null) {
             $comment->commentBody = $request['commentBody'];
             $comment->update();

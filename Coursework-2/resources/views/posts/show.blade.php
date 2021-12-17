@@ -31,7 +31,9 @@
                                         <div class="w-full text-left text-xl font-semibold text-white">
                                             @{{ comment.commentBody }}
                                         </div>
-                                        <button onclick="toggleCommentEdit()" v-if="{{$userType}} == 'AdminProfile' || comment.commentable.id == {{$userId}}" class="ml-2 mt-1 mb-auto text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-indigo-500 hover:bg-white mt-4 lg:mt-0">Edit</button>
+                                        <button onclick="toggleCommentEdit()" v-if="{{$userType}} == 'AdminProfile' || comment.commentable.id == {{$userId}}" class="ml-2 mt-1 mb-auto text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-indigo-500 hover:bg-white mt-4 lg:mt-0">
+                                            Edit
+                                        </button>
                                         <form v-if="{{$userType}} == 'AdminProfile' || comment.commentable.id == {{$userId}}" method="post" action="{{ route('comments.destroy', ['id' => $show]) }}">
                                             @csrf
                                             <input style="display: none" type="text" v-bind:value="comment.id" name="commentId">
