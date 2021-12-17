@@ -66,7 +66,9 @@
                                     <a href="{{ route('user.show', ['id' => $post->postable->user->id]) }}">{{ $post->postable->user->name }}</a> 
                                     on {{ $post->created_at->toFormattedDateString() }}
                                 </div>
-                                <button class="font-bold py-2 px-4 w-full bg-indigo-500 text-lg text-white shadow-md rounded-lg ">Comment </button>
+                                <a href="{{ route('post.show', ['id' => $post->id]) }}">
+                                    <button class="font-bold py-2 px-4 w-full bg-indigo-500 text-lg text-white shadow-md rounded-lg ">Comment </button>
+                                </a>
                                 @foreach($comments as $comment)
                                     @if($comment->post_id == $post->id)
                                         <div class="bg-white rounded-lg p-3 shadow-lg mb-4 content-center flex flex-row flex-wrap">
@@ -87,6 +89,7 @@
                         </div>
                     @endforeach
                 </div>
+                {{ $posts->links() }}
             </div>
         </div>
     </div>

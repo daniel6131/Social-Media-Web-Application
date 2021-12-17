@@ -63,7 +63,7 @@ class UserController extends Controller
         $user = User::where('id', $id)->first();
 
         $postCount = Post::where('postable_id', $id)->pluck('id')->toArray();
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
 
         $commentCount = Comment::where('commentable_id', $id)->pluck('id')->toArray();
         $comments = Comment::orderBy('created_at', 'desc')->get();

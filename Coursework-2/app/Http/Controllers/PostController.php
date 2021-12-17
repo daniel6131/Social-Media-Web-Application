@@ -21,7 +21,7 @@ class PostController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->paginate(10);
         $comments = Comment::latest()->get();
         if($user !== null)
         {
