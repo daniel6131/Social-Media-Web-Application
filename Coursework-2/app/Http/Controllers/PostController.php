@@ -14,7 +14,7 @@ use App\Models\Comment;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Displaying a listing of posts and comments on the main dashboard.
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,7 +42,7 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Creating and storing a newly created post in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -70,8 +70,10 @@ class PostController extends Controller
             $p->postable_type = "App\Models\AdminProfile";
         }
 
+        // Here I am checking if the request contains any form of image 
         if ($media)
         {
+            // This is creating a hashed path of the image so it can be later referenced
             $mediaPath = $request->media->hashName();
             $request->validate([
                 'media' => 'mimes:jpeg,png',
@@ -79,7 +81,6 @@ class PostController extends Controller
 
             Storage::disk('local')->put($mediaPath, File::get($media));
 
-            // $request->file->store('user_files', 'public');
             $p->mediaPath = $mediaPath;
         }
 
@@ -88,6 +89,10 @@ class PostController extends Controller
         return redirect()->route('dashboard');
     }
 
+    /**
+     * This function is retrieving a specified image from local storage
+     * @return \Illuminate\Http\Response
+     */
     public function getPostMedia($mediaPath)
     {
         $media = Storage::disk('local')->get($mediaPath);
@@ -95,7 +100,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Displaying a specified post.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -107,6 +112,7 @@ class PostController extends Controller
         if ($post == null) {
             return redirect()->route('dashboard')->with(['message' => 'Successfully deleted!']);
         }
+        // Ensuring that the user accessing this route is not a guest
         $user = auth()->user();
         if($user !== null)
         {
