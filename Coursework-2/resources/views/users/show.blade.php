@@ -10,12 +10,14 @@
                     </div>
                     <div class="my-3 text-center">
                             @if ($exists)
-                                <a href="{{ route('user.unfollow', ['id' => $user->id]) }}" class="flex-shrink-0 bg-indigo-500 hover:bg-indigo-700 border-indigo-500 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded">
+                                <a href="{{ route('user.unfollow', ['id' => $user->id]) }}" class="flex-shrink-0 bg-indigo-500 hover:bg-indigo-700 
+                                    border-indigo-500 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded">
                                     Unfollow
                                 </a>
                             @elseif ($user == Auth::user())
                             @else
-                                <a href="{{ route('user.follow', ['id' => $user->id]) }}" class="flex-shrink-0 bg-indigo-500 hover:bg-indigo-700 border-indigo-500 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded">
+                                <a href="{{ route('user.follow', ['id' => $user->id]) }}" class="flex-shrink-0 bg-indigo-500 hover:bg-indigo-700 
+                                    border-indigo-500 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded">
                                     Follow
                                 </a>
                             @endif
@@ -38,13 +40,22 @@
                         @auth
                             @if ($user->UserProfile !== null)
                                 <div class="w-full lg:w-4/12 text-center">
-                                    <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($followersCount) }}</span><span class="text-sm text-blueGray-400">Followers</span>
+                                    <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{
+                                        { count($followersCount) }}
+                                    </span>
+                                    <span class="text-sm text-blueGray-400">Followers</span>
                                 </div>
                                 <div class="w-full lg:w-4/12 text-center">
-                                    <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($postCount) }}</span><span class="text-sm text-blueGray-400">Posts</span>
+                                    <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                                        {{ count($postCount) }}
+                                    </span>
+                                    <span class="text-sm text-blueGray-400">Posts</span>
                                 </div>
                                 <div class="w-full lg:w-4/12 text-center">
-                                    <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ count($commentCount) }}</span><span class="text-sm text-blueGray-400">Comments</span>
+                                    <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                                        {{ count($commentCount) }}
+                                    </span>
+                                    <span class="text-sm text-blueGray-400">Comments</span>
                                 </div>
                             @else
                                 <p class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">Admin</p>
@@ -68,14 +79,19 @@
                                                 @endif
                                                 <div class="bg-white border shadow p-5" data-postid="{{ $post->id }}">
                                                     <div class="flex justify-between mb-1">
-                                                        <a href="{{ route('post.show', ['id' => $post->id]) }}" class="text-xl text-gray-700 font-semibold">{{ $post->postContent }}</a>
+                                                        <a href="{{ route('post.show', ['id' => $post->id]) }}" class="text-xl text-gray-700 font-semibold">
+                                                            {{ $post->postContent }}
+                                                        </a>
                                                         @auth
                                                             @if($user->id == $post->postable->user->id or $userType == "AdminProfile")
                                                                 <div>
-                                                                    <a href="#" class="modal-open ml-2 mt-1 mb-auto text-sm px-4 py-2 leading-none border rounded text-indigo-500 border-indigo-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 lg:mt-0">
+                                                                    <a href="#" class="modal-open ml-2 mt-1 mb-auto text-sm px-4 py-2 leading-none border rounded text-indigo-500 
+                                                                    border-indigo-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 lg:mt-0">
                                                                         Edit
                                                                     </a>
-                                                                    <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="ml-2 mt-1 mb-auto text-sm px-4 py-2 leading-none border rounded text-indigo-500 border-indigo-500 hover:border-transparent hover:text-white hover:bg-indigo-500 mt-4 lg:mt-0">
+                                                                    <a href="{{ route('post.destroy', ['id' => $post->id]) }}" class="ml-2 mt-1 mb-auto text-sm px-4 py-2 
+                                                                        leading-none border rounded text-indigo-500 border-indigo-500 hover:border-transparent hover:text-white 
+                                                                        hover:bg-indigo-500 mt-4 lg:mt-0">
                                                                         Delete
                                                                     </a>
                                                                 </div>
@@ -94,7 +110,9 @@
                                                                 <div class="w-full">
                                                                     <div class="w-full text-indigo-600 font-semibold text-xl text-left ">
                                                                         @
-                                                                        <a href="{{ route('user.show', ['id' => $comment->commentable->user->id]) }}">{{ $comment->commentable->user->name }}</a>
+                                                                        <a href="{{ route('user.show', ['id' => $comment->commentable->user->id]) }}">
+                                                                            {{ $comment->commentable->user->name }}
+                                                                        </a>
                                                                     </div>
                                                                     <p class="text-gray-600 text-lg text-center md:text-left ">{{ $comment->commentBody }}</p>
                                                                 </div>
