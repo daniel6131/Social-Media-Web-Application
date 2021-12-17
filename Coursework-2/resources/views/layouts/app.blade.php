@@ -52,5 +52,6 @@
         @yield('content')
 
         <script src="{{ asset('js/modal.js') }}" defer></script>
+        <script src="{{ asset('js/commentEdit.js') }}" defer></script>
     </body>
 </html>

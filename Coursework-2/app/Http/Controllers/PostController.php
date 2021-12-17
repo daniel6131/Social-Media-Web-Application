@@ -161,6 +161,34 @@ class PostController extends Controller
         return $comments = Comment::with('commentable')->where('post_id', $id)->get();
     }
 
+    public function updateComment(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'commentBody' => 'required',
+            'commentId' => 'required',
+        ]);
+        $comment = Comment::find($request['commentId']);
+        $user = auth()->user();
+        $comment->commentBody = $request['commentBody'];
+        $comment->update();
+        return redirect()->route('post.show', ['id' => $id]);
+        // if ($user == $post->postable->user or $user->AdminProfile !== null) {
+        //     $comment->commentBody = $request['commentBody'];
+        //     $post->update();
+        //     return response()->json(['new_body' => $post->postContent], 200);
+        // }
+        // else {
+        //     return redirect()->back()->with(['message' => 'Successfully deleted!']);
+        // }
+    }
+
+    public function destroyComment(Request $request, $id)
+    {
+        $comment = Comment::find($request['commentId']);
+        $comment->delete();
+        return redirect()->route('post.show', ['id' => $id]);
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -51,12 +51,12 @@ Route::post('/dashboard', [UserController::class, 'store'])
     ->middleware(['auth'])->name('user.store');
 
 Route::get('/postmedia/{mediaPath}', [PostController::class, 'getPostMedia'])
-    ->name('post.media');
+    ->middleware(['auth'])->name('post.media');
 
-Route::post('/commentupdate', [PostController::class, 'updateComment'])
-    ->name('comments.update');
+Route::post('/commentupdate/{id}', [PostController::class, 'updateComment'])
+    ->middleware(['auth'])->name('comments.update');
 
-Route::post('/commentdestory', [PostController::class, 'destroyComment'])
-    ->name('comments.destroy');
+Route::post('/commentdestroy/{id}', [PostController::class, 'destroyComment'])
+    ->middleware(['auth'])->name('comments.destroy');
 
 require __DIR__.'/auth.php';
