@@ -8,7 +8,7 @@ for (var i = 0; i < openmodal.length; i++) {
 
     postContentElement = event.target.parentNode.parentNode.childNodes[1];
     var postContent = postContentElement.textContent;
-    Id = event.target.parentNode.parentNode.dataset['postid'];
+    Id = event.target.parentNode.parentNode.parentNode.dataset['postid'];
     $('#post-body').val(postContent);
     toggleModal();
   });
