@@ -13,16 +13,6 @@ use App\Models\Comment;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -43,18 +33,18 @@ class UserController extends Controller
         $validatedData = $request->validate([
             "type" => "required|max:5",
             "username" => "required|unique:user_profiles|unique:admin_profiles|max:15",
-            // "bio" => "max:100"
+            "bio" => "max:100"
         ]);
 
         if ($validatedData["type"] == "user")
         {
             $u = new UserProfile;
-            // $u->bio = $validatedData["bio"];
         }
         else{
             $u = new AdminProfile;
         }
 
+        $u->bio = $validatedData["bio"];
         $u->username = $validatedData["username"];
         $u->user_id = auth()->user()->id;
         $u->save();
@@ -121,37 +111,4 @@ class UserController extends Controller
         return redirect()->route('user.show', ['id' => $id]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

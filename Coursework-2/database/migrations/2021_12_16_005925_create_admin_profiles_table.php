@@ -16,6 +16,7 @@ class CreateAdminProfilesTable extends Migration
         Schema::create('admin_profiles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('bio')->default('Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt');;
             $table->string('username')->unique();
             $table->bigInteger('user_id')->unsigned();
 
