@@ -1,0 +1,15 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+  background-color: #E2E8F0;
+  }
+
+.modal {
+    transition: opacity 0.25s ease;
+  }
+  body.modal-active {
+    overflow-x: hidden;
+    overflow-y: visible !important;
+  }
